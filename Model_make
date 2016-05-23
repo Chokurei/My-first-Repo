@@ -1,0 +1,41 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon May 23 15:47:53 2016
+
+@author: kaku
+Make CNN structure by using models.Sequential
+cnn structure
+
+input:  3 x 18 x 18           
+                              core        border_mode                 output
+layer1: convolution2d         6 x 5 x 5   valid       sigmoid         3 x 14 x 14
+layer2: AveragePooling2d      2 x 2       valid       stride=2        3 x 7 x 7
+layer3: convolution2d         12x 4 x 4   valid       sigmoid         3 x 4 x 4
+layer4: AveragePooling2d      2 x 2       valid       stride=2        3 x 2 x 2
+layer5: Full connected                                                3 x 4 x 1
+        output                                        softmax         2 x 1
+"""
+from keras.models import Sequential
+from keras.layers import Dense, Activation, Flatten
+from keras.layers import Convolution2D
+from keras.layers.convolutional import AveragePooling2D
+
+def creat_model():
+    model=Sequential()
+    model.add(Convolution2D(6,5,5, border_mode= 'valid',input_shape=(3,18,18)))
+    model.add(Activation('sigmoid'))
+    model.add(AveragePooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='valid'))
+    model.add(Convolution2D(12,4,4, border_mode='valid',input_shape=(3,7,7)))
+    model.add(Activation('sigmoid'))
+    model.add(AveragePooling2D(pool_size=(2,2), strides=(2,2), border_mode='valid'))
+    model.add(Flatten())
+    model.add(Dense(2))
+    model.add(Activation('sigmoid'))
+    
+    model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
+    return model
+
+
+
+
+
