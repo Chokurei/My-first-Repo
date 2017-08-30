@@ -20,8 +20,6 @@ from keras.layers import Dense, Activation, Flatten
 from keras.layers import Convolution2D
 from keras.layers.convolutional import AveragePooling2D
 
-#The first line to trial
-#The second line to trial
 def creat_model():
     model=Sequential()
     model.add(Convolution2D(6,5,5, border_mode= 'valid',input_shape=(3,18,18)))
